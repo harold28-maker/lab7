@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Registrar pedido</title>
+</head>
+<body>
+
+<div th:replace="~{fragments/general :: menu}"></div>
+
+<main>
+    <h1>Registrar pedido</h1>
+
+    <form th:action="@{/pedidos/guardar}"
+          th:object="${invoiceForm}"
+          method="post">
+
+        <div th:if="${#fields.hasGlobalErrors()}">
+            <p th:each="error : ${#fields.globalErrors()}"
+               th:text="${error}"
+               style="color: red;"></p>
+        </div>
+
+        <div>
+            <label for="type">Tipo de comprobante:</label>
+
+            <select th:field="*{type}">
+                <option value="">Seleccione</option>
+                <option value="Factura">Factura</option>
+                <option value="Boleta">Boleta</option>
+            </select>
+
+            <p th:errors="*{type}" style="color: red;"></p>
+        </div>
+
+        <br>
+
+        <div>
+            <label for="date">Fecha:</label>
+            <input type="date" th:field="*{date}">
+
+            <p th:errors="*{date}" style="color: red;"></p>
+        </div>
+
+        <br>
+
+        <div>
+            <label for="customerId">Cliente:</label>
+
+            <select th:field="*{customerId}">
+                <option value="">Seleccione</option>
+
+                <option th:each="cliente : ${clientes}"
+                        th:value="${cliente.id}"
+                        th:text="${cliente.name + ' - '
+                                   + cliente.documentType + ': '
+                                   + cliente.document}">
+                </option>
+            </select>
+
+            <p th:errors="*{customerId}" style="color: red;"></p>
+        </div>
+
+        <h2>Productos del pedido</h2>
+
+        <p th:errors="*{details}" style="color: red;"></p>
+
+        <table border="1" cellpadding="8">
+            <thead>
+            <tr>
+                <th>Producto</th>
+                <th>Cantidad</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="linea, estado : *{details}">
+                <td>
+                    <select
+                            th:field="*{details[__${estado.index}__].productId}">
+
+                        <option value="">Seleccione</option>
+
+                        <option th:each="producto : ${productos}"
+                                th:value="${producto.id}"
+                                th:text="${producto.name
+                                    + ' | Precio: S/ ' + producto.price
+                                    + ' | Stock: ' + producto.stock}">
+                        </option>
+                    </select>
+
+                    <p th:errors="*{details[__${estado.index}__].productId}"
+                       style="color: red;"></p>
+                </td>
+
+                <td>
+                    <input type="text"
+                           inputmode="numeric"
+                           th:field="*{details[__${estado.index}__].quantity}">
+
+                    <p th:errors="*{details[__${estado.index}__].quantity}"
+                       style="color: red;"></p>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <br>
+
+        <button type="submit" name="accion" value="agregar">
+            Agregar producto
+        </button>
+
+        <button type="submit" name="accion" value="guardar">
+            Registrar pedido
+        </button>
+
+        <a th:href="@{/pedidos}">Cancelar</a>
+    </form>
+</main>
+
+</body>
+</html>

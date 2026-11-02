@@ -11,13 +11,4 @@ public class HomeController {
     public String inicio() {
         return "inicio";
     }
-
-    @GetMapping("/pedidos")
-    public String pedidos(Model model) {
-        model.addAttribute("titulo", "Pedidos");
-        model.addAttribute("descripcion",
-                "Sección para registrar y consultar pedidos de venta.");
-
-        return "seccion";
-    }
 }

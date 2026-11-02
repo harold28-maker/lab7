@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Pedidos</title>
+</head>
+<body>
+
+<div th:replace="~{fragments/general :: menu}"></div>
+
+<main>
+    <h1>Listado de pedidos</h1>
+
+    <p th:if="${mensaje != null}"
+       th:text="${mensaje}"
+       style="color: green;"></p>
+
+    <a th:href="@{/pedidos/nuevo}">Registrar pedido</a>
+
+    <p th:if="${#lists.isEmpty(pedidos)}">
+        No hay pedidos registrados.
+    </p>
+
+    <article th:each="pedido : ${pedidos}">
+        <hr>
+
+        <h2 th:text="${'Pedido N.º ' + pedido.id}"></h2>
+
+        <p>
+            <strong>Comprobante:</strong>
+            <span th:text="${pedido.type}"></span>
+        </p>
+
+        <p>
+            <strong>Fecha:</strong>
+            <span th:text="${pedido.date}"></span>
+        </p>
+
+        <p>
+            <strong>Cliente:</strong>
+            <span th:text="${pedido.customer.name}"></span>
+        </p>
+
+        <table border="1" cellpadding="8">
+            <thead>
+            <tr>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Precio unitario (S/)</th>
+                <th>Subtotal (S/)</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="detalle : ${pedido.details}">
+                <td th:text="${detalle.product.name}"></td>
+                <td th:text="${detalle.quantity}"></td>
+
+                <td th:text="${#numbers.formatDecimal(
+                    detalle.price, 1, 'COMMA', 2, 'POINT')}"></td>
+
+                <td th:text="${#numbers.formatDecimal(
+                    detalle.subtotal, 1, 'COMMA', 2, 'POINT')}"></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <p>
+            <strong>Total: S/ </strong>
+
+            <span th:text="${#numbers.formatDecimal(
+                pedido.total, 1, 'COMMA', 2, 'POINT')}"></span>
+        </p>
+    </article>
+</main>
+
+</body>
+</html>
