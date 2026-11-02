@@ -12,15 +12,6 @@ public class HomeController {
         return "inicio";
     }
 
-    @GetMapping("/clientes")
-    public String clientes(Model model) {
-        model.addAttribute("titulo", "Clientes");
-        model.addAttribute("descripcion",
-                "Sección para registrar, consultar y actualizar clientes.");
-
-        return "seccion";
-    }
-
     @GetMapping("/productos")
     public String productos(Model model) {
         model.addAttribute("titulo", "Catálogo");
