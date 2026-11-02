@@ -12,15 +12,6 @@ public class HomeController {
         return "inicio";
     }
 
-    @GetMapping("/productos")
-    public String productos(Model model) {
-        model.addAttribute("titulo", "Catálogo");
-        model.addAttribute("descripcion",
-                "Sección para consultar productos, precios y stock disponible.");
-
-        return "seccion";
-    }
-
     @GetMapping("/pedidos")
     public String pedidos(Model model) {
         model.addAttribute("titulo", "Pedidos");
