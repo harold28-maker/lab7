@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Portal de gestión comercial</title>
+</head>
+<body>
+
+<div th:replace="~{fragments/general :: menu}"></div>
+
+<main>
+    <h1>Portal de gestión comercial</h1>
+
+    <p>
+        Bienvenido al sistema de gestión de la distribuidora.
+        Desde este portal puedes administrar clientes, consultar
+        el catálogo de productos y registrar pedidos de venta.
+    </p>
+
+    <h2>Secciones principales</h2>
+
+    <ul>
+        <li>
+            <a th:href="@{/clientes}">Clientes</a>
+            <p>Administra los datos y documentos de los clientes.</p>
+        </li>
+
+        <li>
+            <a th:href="@{/productos}">Catálogo</a>
+            <p>Consulta los productos, sus precios y el stock disponible.</p>
+        </li>
+
+        <li>
+            <a th:href="@{/pedidos}">Pedidos</a>
+            <p>Registra y consulta los pedidos de venta.</p>
+        </li>
+    </ul>
+</main>
+
+</body>
+</html>
